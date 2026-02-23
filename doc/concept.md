@@ -1,12 +1,28 @@
-# Concept - `<Project-NAME>`
+# Concept - ReflexRush
 
-> [!Note]
-> Write an excessive documentation ("Lasten- / Pflichtenheft") on how you are going to solve the given problem(s)...  
-> This contains at least:  
-> - Full problem description
-> - Tasks
-> - Milestones
-> - Used Technolgies
-> - ... and many more
->  
-> This note can be deleted.
+## Team
+- Muhammeddjan Ademi
+- Maximilian Beutelmeyer
+
+## Materialien
+ 
+Display
+Arduino
+zwei Taster
+ 
+ 
+## Spielablauf
+ 
+1. Beide Spieler warten
+2. Arduino startet Countdown (Display: 3...     2...       1...)
+3. Zufällige pause befor "GO!"
+4. Timer starten
+5. Spieler reagieren
+6. Arduino speichert die Daten
+7. Insgesamt werden drei Runden gespielt
+   Wer zwei mal schneller war, hat gewonnen
+ 
+ 
+## Extra
+ 
+Bei Frühstart bekommt der Gegner den Punkt
