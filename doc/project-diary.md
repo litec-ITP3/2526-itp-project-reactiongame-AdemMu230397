@@ -12,3 +12,6 @@ Danach haben wir uns die Hardware angeschaut: Pico W, OLED-Display und Buttons. 
 Anschließend haben wir verschiedene Programmiersprachen recherchiert (C++ / C#) und wahrscheinlich nutzen wir C.
 
 Zum Schluss haben wir Meilensteine festgelegt und die Aufgaben unter uns aufgeteilt.
+
+09.03.2026 - Muhammeddjan Ademi
+Die Software ist programmiert und das Display-Layout funktioniert. Aktuell reagiert jedoch nur einer der beiden Buttons. Es fehlen noch die Fehlstart-Erkennung, die Einbindung des zweiten Buttons sowie weitere Optimierungen.
