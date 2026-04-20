@@ -44,8 +44,13 @@ Bei Frühstart bekommt der Gegner den Punkt
 ## Meilensteine
  
  - 23.02.2026 Concept fertig gestellt
- - 02.03.2026 MockUp fertig/ Arbeitsaufteilung erledigt
- - 09.03.2026 Hardware aufgebaut/ Software angefangen
- - 16.03.2026 Software weiter entwickeln
- - 23.03.2026 Alles kontrollieren
- - 13.04.2026 fertig mit Allem
+ - 02.03.2026 *ENTFALL*
+ - 09.03.2026 *ENTFALL*
+ - 16.03.2026 *ENTFALL*
+ - 23.03.2026 *ENTFALL*
+ - 13.04.2026 *ENTFALL*
+ - 20.04.2026 MockUp fertig/ Arbeitsaufteilung erledigt
+ - 27.04.2026 Hardware aufgebaut/ Software angefangen
+ - 04.05.2026 Software weiter entwickeln
+ - 11.05.2026 Alles kontrollieren
+ - 18.05.2026 fertig mit Allem
