@@ -15,3 +15,6 @@ Zum Schluss haben wir Meilensteine festgelegt und die Aufgaben unter uns aufgete
 
 09.03.2026 - Muhammeddjan Ademi
 Die Software ist programmiert und das Display-Layout funktioniert. Aktuell reagiert jedoch nur einer der beiden Buttons. Es fehlen noch die Fehlstart-Erkennung, die Einbindung des zweiten Buttons sowie weitere Optimierungen.
+
+20.04.2026 - Muhammeddjan Ademi
+Ich habe versucht den Software zu verbessern aber ist nicht gegangen also nächstes mal weiß ich was ich machen muss.

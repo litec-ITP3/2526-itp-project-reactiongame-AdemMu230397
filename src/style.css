@@ -1,0 +1,46 @@
+body{
+margin:0;
+background:#0a0a0a;
+font-family:Arial;
+color:white;
+text-align:center;
+}
+
+.container{
+margin-top:80px;
+}
+
+h1{
+font-size:60px;
+color:#00ffff;
+text-shadow:0 0 20px #00ffff;
+}
+
+button{
+padding:15px 40px;
+margin:15px;
+font-size:22px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:#ff00ff;
+color:white;
+box-shadow:0 0 20px #ff00ff;
+}
+
+#status{
+font-size:30px;
+margin:20px;
+}
+
+#countdown{
+font-size:120px;
+color:yellow;
+margin-top:30px;
+}
+
+#winner{
+font-size:70px;
+color:#00ff00;
+margin-top:30px;
+}

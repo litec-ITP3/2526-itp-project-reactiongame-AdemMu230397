@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<body style="background:black;color:white;text-align:center;padding-top:100px;font-family:Arial;">
+
+<button onclick="connect()">Arduino verbinden</button>
+
+<h1 id="box">Warte...</h1>
+
+<script>
+
+async function connect(){
+
+const port = await navigator.serial.requestPort();
+await port.open({ baudRate:9600 });
+
+const decoder = new TextDecoderStream();
+port.readable.pipeTo(decoder.writable);
+
+const reader = decoder.readable.getReader();
+
+let buffer = "";
+
+while(true){
+
+const { value, done } = await reader.read();
+
+if(done) break;
+
+buffer += value;
+
+let lines = buffer.split("\n");
+
+buffer = lines.pop();
+
+for(let line of lines){
+
+line = line.trim();
+
+if(line == "Spieler1"){
+document.getElementById("box").innerHTML =
+"🏆 Spieler 1 gewinnt!";
+}
+
+if(line == "Spieler2"){
+document.getElementById("box").innerHTML =
+"🏆 Spieler 2 gewinnt!";
+}
+
+}
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
