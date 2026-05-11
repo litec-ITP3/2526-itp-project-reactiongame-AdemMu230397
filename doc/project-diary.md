@@ -18,3 +18,9 @@ Die Software ist programmiert und das Display-Layout funktioniert. Aktuell reagi
 
 20.04.2026 - Muhammeddjan Ademi
 Ich habe versucht den Software zu verbessern aber ist nicht gegangen also nächstes mal weiß ich was ich machen muss.
+
+27.04.2026
+Code funktioniert nach einer Stunde aber die Webseite müssen wir noch entwerfen.
+
+11.05.2026
+Alles nochmal überprüft und manual, concept und project-diary fertiggeschrieben.

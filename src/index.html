@@ -1,19 +1,103 @@
 <!DOCTYPE html>
 <html lang="de">
-<body style="background:black;color:white;text-align:center;padding-top:100px;font-family:Arial;">
 
-<button onclick="connect()">Arduino verbinden</button>
+<head>
+<meta charset="UTF-8">
+<title>ReflexRush</title>
 
-<h1 id="box">Warte...</h1>
+<style>
+
+body{
+background:black;
+color:white;
+font-family:Arial;
+text-align:center;
+padding-top:60px;
+}
+
+h1{
+font-size:70px;
+margin-bottom:20px;
+}
+
+button{
+padding:15px 35px;
+font-size:22px;
+cursor:pointer;
+border:none;
+border-radius:10px;
+}
+
+#winner{
+font-size:55px;
+margin-top:60px;
+font-weight:bold;
+}
+
+#time{
+font-size:35px;
+margin-top:25px;
+}
+
+#score{
+font-size:30px;
+margin-top:40px;
+line-height:1.8;
+}
+
+#status{
+margin-top:20px;
+font-size:22px;
+color:lightgreen;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>ReflexRush</h1>
+
+<button onclick="connect()">
+Arduino verbinden
+</button>
+
+<div id="status">
+Nicht verbunden
+</div>
+
+<div id="winner">
+Warte auf Spiel...
+</div>
+
+<div id="time"></div>
+
+<div id="score">
+
+Spieler 1 Siege: 0<br>
+Spieler 2 Siege: 0
+
+</div>
 
 <script>
 
+let score1 = 0;
+let score2 = 0;
+
 async function connect(){
 
+try {
+
 const port = await navigator.serial.requestPort();
+
 await port.open({ baudRate:9600 });
 
+document.getElementById("status").innerHTML =
+"Verbunden ✅";
+
 const decoder = new TextDecoderStream();
+
 port.readable.pipeTo(decoder.writable);
 
 const reader = decoder.readable.getReader();
@@ -36,17 +120,58 @@ for(let line of lines){
 
 line = line.trim();
 
-if(line == "Spieler1"){
-document.getElementById("box").innerHTML =
+console.log(line);
+
+// Spieler 1
+if(line.startsWith("P1|")){
+
+const parts = line.split("|");
+
+const time = parts[1];
+
+score1 = parts[2];
+
+document.getElementById("winner").innerHTML =
 "🏆 Spieler 1 gewinnt!";
+
+document.getElementById("time").innerHTML =
+"⏱ Zeit: " + time + " ms";
+
+document.getElementById("score").innerHTML =
+"Spieler 1 Siege: " + score1 + "<br>" +
+"Spieler 2 Siege: " + score2;
 }
 
-if(line == "Spieler2"){
-document.getElementById("box").innerHTML =
+// Spieler 2
+if(line.startsWith("P2|")){
+
+const parts = line.split("|");
+
+const time = parts[1];
+
+score2 = parts[2];
+
+document.getElementById("winner").innerHTML =
 "🏆 Spieler 2 gewinnt!";
+
+document.getElementById("time").innerHTML =
+"⏱ Zeit: " + time + " ms";
+
+document.getElementById("score").innerHTML =
+"Spieler 1 Siege: " + score1 + "<br>" +
+"Spieler 2 Siege: " + score2;
 }
 
 }
+
+}
+
+}
+
+catch(err){
+
+document.getElementById("status").innerHTML =
+"Fehler: " + err;
 
 }
 

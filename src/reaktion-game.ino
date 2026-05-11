@@ -2,137 +2,236 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-
-
 // OLED Einstellungen
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 
-// Initialisierung für I2C (Pins 20 & 21 am Mega werden automatisch genutzt)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
+// Buttons
+const int button1 = 6;
+const int button2 = 8;
 
+// LEDs
+const int led1 = 5;
+const int led2 = 7;
 
-// Pins
-const int button1 = A0;
-const int button2 = A1;
+unsigned long startZeit;
 
+bool spielLaeuft = false;
 
-int winsP1 = 0;
-int winsP2 = 0;
-int rounds = 0;
-
+// Punkte
+int scoreP1 = 0;
+int scoreP2 = 0;
 
 void setup() {
-  Serial.begin(9600); // Zum Testen in VS Code (Serieller Monitor)
 
- 
+  Serial.begin(9600);
+
   pinMode(button1, INPUT_PULLUP);
   pinMode(button2, INPUT_PULLUP);
 
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
 
-  // OLED starten (Adresse meist 0x3C)
+  // OLED starten
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-    Serial.println(F("OLED nicht gefunden!"));
-    for(;;);
-  }
 
-
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(10, 20);
-  display.print("REAKTIONSTEST");
-  display.display();
-  delay(2000);
-}
-
-
-
-void loop() {
-  if (rounds < 3 && winsP1 < 2 && winsP2 < 2) {
-    playRound();
-  } else {
-    showWinner();
     while(true);
   }
+
+  // Startbildschirm
+  display.clearDisplay();
+
+  display.setTextSize(2);
+
+  display.setTextColor(WHITE);
+
+  display.setCursor(5,20);
+
+  display.println("ReflexRush");
+
+  display.display();
+
+  delay(2000);
+
+  resetScreen();
 }
 
+void loop() {
 
+  // Spiel starten
+  if (!spielLaeuft) {
 
-void playRound() {
-  display.clearDisplay();
-  display.setCursor(0,0);
-  display.print("Runde: "); display.println(rounds + 1);
-  display.display();
-  delay(1500);
+    if (digitalRead(button1) == LOW ||
+        digitalRead(button2) == LOW) {
 
+      // Startanzeige
+      display.clearDisplay();
 
+      display.setTextSize(1);
 
-  // Countdown
+      display.setCursor(0,0);
 
-  for (int i = 3; i > 0; i--) {
-    display.clearDisplay();
-    display.setTextSize(3);
-    display.setCursor(55, 20);
-    display.print(i);
-    display.display();
-    delay(1000);
-  }
+      display.println("Spiel startet!");
 
+      display.display();
 
+      // LEDs blinken
+      for (int i = 0; i < 4; i++) {
 
-  display.clearDisplay();
-  display.display();
-  delay(random(1000, 4000)); // Zufallspause
+        digitalWrite(led1, HIGH);
+        digitalWrite(led2, HIGH);
 
+        delay(250);
 
-  display.clearDisplay();
-  display.setCursor(35, 20);
-  display.print("GO!");
-  display.display();
+        digitalWrite(led1, LOW);
+        digitalWrite(led2, LOW);
 
- 
-  long startTime = millis();
-  long reaction = 0;
-  int winner = 0;
+        delay(250);
+      }
 
+      // Zufallspause
+      delay(random(1500,6000));
 
-  // Wer drückt zuerst?
+      // GO
+      digitalWrite(led1, HIGH);
+      digitalWrite(led2, HIGH);
 
-  while (winner == 0) {
-    if (digitalRead(button1) == LOW) {
-      reaction = millis() - startTime;
-      winner = 1;
-      winsP1++;
-    } else if (digitalRead(button2) == LOW) {
-      reaction = millis() - startTime;
-      winner = 2;
-      winsP2++;
+      display.clearDisplay();
+
+      display.setTextSize(3);
+
+      display.setCursor(25,20);
+
+      display.println("GO!");
+
+      display.display();
+
+      startZeit = millis();
+
+      spielLaeuft = true;
     }
   }
 
+  // Spieler 1 gewinnt
+  if (spielLaeuft && digitalRead(button1) == LOW) {
+
+    unsigned long zeit = millis() - startZeit;
+
+    scoreP1++;
+
+    display.clearDisplay();
+
+    display.setTextSize(1);
+
+    display.setCursor(0,0);
+
+    display.println("Spieler 1 gewinnt!");
+
+    display.print("Zeit: ");
+
+    display.print(zeit);
+
+    display.println(" ms");
+
+    display.println();
+
+    display.print("P1 Siege: ");
+    display.println(scoreP1);
+
+    display.print("P2 Siege: ");
+    display.println(scoreP2);
+
+    display.display();
+
+    // Für Website
+    Serial.print("P1|");
+    Serial.print(zeit);
+    Serial.print("|");
+    Serial.println(scoreP1);
+
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, LOW);
+
+    spielLaeuft = false;
+
+    delay(3000);
+
+    resetScreen();
+  }
+
+  // Spieler 2 gewinnt
+  if (spielLaeuft && digitalRead(button2) == LOW) {
+
+    unsigned long zeit = millis() - startZeit;
+
+    scoreP2++;
+
+    display.clearDisplay();
+
+    display.setTextSize(1);
+
+    display.setCursor(0,0);
+
+    display.println("Spieler 2 gewinnt!");
+
+    display.print("Zeit: ");
+
+    display.print(zeit);
+
+    display.println(" ms");
+
+    display.println();
+
+    display.print("P1 Siege: ");
+    display.println(scoreP1);
+
+    display.print("P2 Siege: ");
+    display.println(scoreP2);
+
+    display.display();
+
+    // Für Website
+    Serial.print("P2|");
+    Serial.print(zeit);
+    Serial.print("|");
+    Serial.println(scoreP2);
+
+    digitalWrite(led2, HIGH);
+    digitalWrite(led1, LOW);
+
+    spielLaeuft = false;
+
+    delay(3000);
+
+    resetScreen();
+  }
+}
+
+// Startbildschirm
+void resetScreen() {
+
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
 
   display.clearDisplay();
+
   display.setTextSize(1);
-  display.setCursor(0, 0);
-  display.print("Spieler "); display.print(winner); display.println(" gewinnt!");
-  display.print("Zeit: "); display.print(reaction); display.println(" ms");
-  display.display();
 
- 
-  rounds++;
-  delay(3000);
+  display.setCursor(0,0);
 
-}
+  display.println("Button druecken");
 
+  display.println("zum Starten");
 
-void showWinner() {
-  display.clearDisplay();
-  display.setTextSize(2);
-  display.setCursor(0, 10);
-  if (winsP1 > winsP2) display.print("SIEG: P1");
-  else display.print("SIEG: P2");
+  display.println();
+
+  display.print("P1 Siege: ");
+  display.println(scoreP1);
+
+  display.print("P2 Siege: ");
+  display.println(scoreP2);
+
   display.display();
 }
-

@@ -51,6 +51,6 @@ Bei Frühstart bekommt der Gegner den Punkt
  - 13.04.2026 *ENTFALL*
  - 20.04.2026 MockUp fertig/ Arbeitsaufteilung erledigt
  - 27.04.2026 Hardware aufgebaut/ Software angefangen
- - 04.05.2026 Software weiter entwickeln
- - 11.05.2026 Alles kontrollieren
- - 18.05.2026 fertig mit Allem
+ - 04.05.2026 *ENTFALL*
+ - 11.05.2026 Alles kontrolliert
+
